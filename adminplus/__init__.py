@@ -2,6 +2,9 @@ from django.contrib.admin.sites import AdminSite
 from django.utils.text import capfirst
 
 
+__version__ = '0.1'
+
+
 class AdminSitePlus(AdminSite):
     """Extend AdminSite to allow registering custom admin views."""
     index_template = 'adminplus/index.html'  # That was easy.
