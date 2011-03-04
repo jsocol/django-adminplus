@@ -23,8 +23,8 @@ class AdminSitePlus(AdminSite):
 
     def get_urls(self):
         """Add our custom views to the admin urlconf."""
-        urls = super(KAdminSite, self).get_urls()
-        from django.conf.urls.defaults import patterns, url, include
+        urls = super(AdminSitePlus, self).get_urls()
+        from django.conf.urls.defaults import patterns, url
         for path, view, name in self.custom_views:
             urls += patterns('',
                 url(r'^%s$' % path, self.admin_view(view)),
@@ -43,4 +43,4 @@ class AdminSitePlus(AdminSite):
         extra_context.update({
             'custom_list': custom_list
         })
-        return super(KAdminSite, self).index(request, extra_context)
+        return super(AdminSitePlus, self).index(request, extra_context)
