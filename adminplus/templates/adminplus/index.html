@@ -1,0 +1,16 @@
+{% extends "admin/index.html" %}
+
+{% block sidebar %}
+  {{ block.super }}
+
+  {% if custom_list %}
+    <div id="custom-views" style="float:left">
+      <h2>Custom Views</h2>
+      <ul>
+        {% for path, name in custom_list %}
+          <li><a href="{{ path }}">{{ name }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+{% endblock %}
