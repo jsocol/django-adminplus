@@ -4,13 +4,15 @@
   {{ block.super }}
 
   {% if custom_list %}
-    <div id="custom-views" style="float:left">
-      <h2>Custom Views</h2>
-      <ul>
+  <div class="module" style="float: left;">
+    <table>
+      <caption>Custom Views</caption>
+      <tbody>
         {% for path, name in custom_list %}
-          <li><a href="{{ path }}">{{ name }}</a></li>
+          <tr><td><a href="{{ path }}">{{ name }}</a></td></tr>
         {% endfor %}
-      </ul>
-    </div>
+      </tbody>
+    </table>
+  </div>
   {% endif %}
 {% endblock %}
