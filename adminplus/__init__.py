@@ -3,13 +3,23 @@ from django.utils.text import capfirst
 
 
 class AdminSitePlus(AdminSite):
-    index_template = 'adminplus/index.html'
+    """Extend AdminSite to allow registering custom admin views."""
+    index_template = 'adminplus/index.html'  # That was easy.
     custom_views = []
 
     def register_view(self, path, view, name=None):
+        """Add a custom admin view.
+
+        * `path` is the path in the admin where the view will live, e.g.
+            http://example.com/admin/somepath
+        * `view` is any view function you can imagine.
+        * `name` is an optional pretty name for the list of custom views. If
+            empty, we'll guess based on view.__name__.
+        """
         self.custom_views.append((path, view, name))
 
     def get_urls(self):
+        """Add our custom views to the admin urlconf."""
         urls = super(KAdminSite, self).get_urls()
         from django.conf.urls.defaults import patterns, url, include
         for path, view, name in self.custom_views:
@@ -19,6 +29,7 @@ class AdminSitePlus(AdminSite):
         return urls
 
     def index(self, request, extra_context=None):
+        """Make sure our list of custom views is on the index page."""
         if not extra_context:
             extra_context = {}
         custom_list = [(path, name if name else
