@@ -3,7 +3,7 @@ from django.utils.text import capfirst
 
 
 class AdminSitePlus(AdminSite):
-    index_template = 'kadmin/index.html'
+    index_template = 'adminplus/index.html'
     custom_views = []
 
     def register_view(self, path, view, name=None):
