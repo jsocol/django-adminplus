@@ -2,7 +2,7 @@ from django.contrib.admin.sites import AdminSite
 from django.utils.text import capfirst
 
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 
 class AdminSitePlus(AdminSite):
@@ -39,7 +39,7 @@ class AdminSitePlus(AdminSite):
                         capfirst(view.__name__)) for path, view, name in
                         self.custom_views]
         # Sort views alphabetically.
-        custom_list.sort(lambda x: x[1])
+        custom_list.sort(key=lambda x: x[1])
         extra_context.update({
             'custom_list': custom_list
         })

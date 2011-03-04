@@ -1,8 +1,9 @@
 from setuptools import setup
 
+
 setup(
     name='django-adminplus',
-    version='0.1.1',
+    version='0.1.2',
     description='Add new pages to the Django admin.',
     long_description=open('README.rst').read(),
     author='James Socol',

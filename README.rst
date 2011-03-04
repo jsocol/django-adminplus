@@ -26,6 +26,14 @@ pip::
 
     pip install -e git://github.com/jsocol/django-adminplus
 
+And add ``adminplus`` to your installed apps::
+
+    INSTALLED_APPS = (
+        # ...
+        'adminplus',
+        # ...
+    )
+
 To use AdminPlus in your Django project, you'll need to replace
 ``django.contrib.admin.site``, which is an instance of
 ``django.contrib.admin.sites.AdminSite``. I recommend doing this in ``urls.py``
