@@ -24,7 +24,7 @@ Installing AdminPlus
 Grab AdminPlus from `github <https://github.com/jsocol/django-adminplus>`_ with
 pip::
 
-    pip install -e git://github.com/jsocol/django-adminplus
+    pip install -e git://github.com/jsocol/django-adminplus#egg=django-adminplus
 
 And add ``adminplus`` to your installed apps::
 
