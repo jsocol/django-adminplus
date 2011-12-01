@@ -2,7 +2,8 @@ from django.contrib.admin.sites import AdminSite
 from django.utils.text import capfirst
 
 
-__version__ = '0.1.3'
+VERSION = (0, 1, 4)
+__version__ = '.'.join([str(x) for x in VERSION])
 
 
 class AdminSitePlus(AdminSite):
