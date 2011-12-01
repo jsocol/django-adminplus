@@ -12,7 +12,7 @@ setup(
     license='BSD',
     packages=['adminplus'],
     include_package_data=True,
-    package_data = {'': ['README.rst']},
+    package_data = {'': ['README.rst', 'templates/adminplus/*.html']},
     zip_safe=False,
     classifiers=[
         'Development Status :: 4 - Beta',
