@@ -2,7 +2,7 @@ from django.contrib.admin.sites import AdminSite
 from django.utils.text import capfirst
 
 
-VERSION = (0, 1, 4)
+VERSION = (0, 1, 5)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 
