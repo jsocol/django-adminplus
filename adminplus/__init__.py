@@ -11,7 +11,7 @@ class AdminSitePlus(AdminSite):
     index_template = 'adminplus/index.html'  # That was easy.
     custom_views = []
 
-    def register_view(self, path, view, name=None):
+    def register_view(self, path, view, name=None, urlname=None):
         """Add a custom admin view.
 
         * `path` is the path in the admin where the view will live, e.g.
@@ -20,15 +20,15 @@ class AdminSitePlus(AdminSite):
         * `name` is an optional pretty name for the list of custom views. If
             empty, we'll guess based on view.__name__.
         """
-        self.custom_views.append((path, view, name))
+        self.custom_views.append((path, view, name, urlname))
 
     def get_urls(self):
         """Add our custom views to the admin urlconf."""
         urls = super(AdminSitePlus, self).get_urls()
         from django.conf.urls.defaults import patterns, url
-        for path, view, name in self.custom_views:
+        for path, view, name, urlname in self.custom_views:
             urls += patterns('',
-                url(r'^%s$' % path, self.admin_view(view)),
+                url(r'^%s$' % path, self.admin_view(view), name=urlname),
             )
         return urls
 
