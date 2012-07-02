@@ -37,7 +37,7 @@ class AdminSitePlus(AdminSite):
         if not extra_context:
             extra_context = {}
         custom_list = [(path, name if name else
-                        capfirst(view.__name__)) for path, view, name in
+                        capfirst(view.__name__)) for path, view, name, urlname in
                         self.custom_views]
         # Sort views alphabetically.
         custom_list.sort(key=lambda x: x[1])
