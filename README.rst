@@ -81,11 +81,17 @@ arbitrary views to the admin::
 Now ``my_view`` will be accessible at ``admin/somepath`` and there will be a
 link to it in the *Custom Views* section of the admin index.
 
-``register_view`` takes a 3rd, optional argument: a friendly name for display
-in the list of custom views. For example::
+``register_view`` takes some optional arguments: 
+
+* ``name``: a friendly name for display in the list of custom views. For example::
 
     def my_view(request):
         """Does something fancy!"""
     admin.site.register_view('somepath', my_view, 'My Fancy Admin View!')
+
+* ``urlname``: give a name to the urlpattern so it can be called by 
+  ``redirect()``, ``reverse()``, etc.
+* `visible`: a boolean that defines if the custom view is visible in the admin
+  dashboard.
 
 All registered views are wrapped in ``admin.site.admin_view``.
