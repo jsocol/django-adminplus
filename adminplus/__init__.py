@@ -46,7 +46,7 @@ class AdminSitePlus(AdminSite):
                 if name:
                     custom_list.append((path, name))
                 else:
-                    custom_list.append(path, capfirst(view.__name__))
+                    custom_list.append((path, capfirst(view.__name__)))
 
         # Sort views alphabetically.
         custom_list.sort(key=lambda x: x[1])
