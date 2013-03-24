@@ -6,4 +6,12 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'adminplus',
 )
+
 SECRET_KEY = 'adminplus'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'test.db',
+    },
+}

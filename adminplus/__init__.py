@@ -10,3 +10,4 @@ except ImportError:
 
 VERSION = (0, 2, 'dev')
 __version__ = '.'.join(map(str, VERSION))
+__all__ = ['AdminSitePlus', 'site']

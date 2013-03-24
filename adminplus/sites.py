@@ -6,26 +6,38 @@ class AdminPlusMixin(object):
     """Mixin for AdminSite to allow registering custom admin views."""
 
     index_template = 'adminplus/index.html'  # That was easy.
-    custom_views = []
 
-    def register_view(self, path, view, name=None, urlname=None, visible=True):
-        """Add a custom admin view.
+    def __init__(self, *args, **kwargs):
+        self.custom_views = []
+        return super(AdminPlusMixin, self).__init__(*args, **kwargs)
+
+    def register_view(self, path, name=None, urlname=None, visible=True,
+                      view=None):
+        """Add a custom admin view. Can be used as a function or a decorator.
 
         * `path` is the path in the admin where the view will live, e.g.
             http://example.com/admin/somepath
-        * `view` is any view function you can imagine.
         * `name` is an optional pretty name for the list of custom views. If
             empty, we'll guess based on view.__name__.
         * `urlname` is an optional parameter to be able to call the view with a
             redirect() or reverse()
         * `visible` is a boolean to set if the custom view should be visible in
             the admin dashboard or not.
+        * `view` is any view function you can imagine.
         """
-        self.custom_views.append((path, view, name, urlname, visible))
+        if view is not None:
+            self.custom_views.append((path, view, name, urlname, visible))
+            return
+
+        def decorator(fn):
+            self.custom_views.append((path, fn, name, urlname, visible))
+            return fn
+        return decorator
+
 
     def get_urls(self):
         """Add our custom views to the admin urlconf."""
-        urls = super(AdminSitePlus, self).get_urls()
+        urls = super(AdminPlusMixin, self).get_urls()
         from django.conf.urls.defaults import patterns, url
         for path, view, name, urlname, visible in self.custom_views:
             urls += patterns(
@@ -51,7 +63,7 @@ class AdminPlusMixin(object):
         extra_context.update({
             'custom_list': custom_list
         })
-        return super(AdminSitePlus, self).index(request, extra_context)
+        return super(AdminPlusMixin, self).index(request, extra_context)
 
 
 class AdminSitePlus(AdminPlusMixin, AdminSite):
