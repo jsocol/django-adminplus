@@ -1,16 +1,18 @@
-from setuptools import setup
+from setuptools import setup, find_packages
+
+import adminplus
 
 
 setup(
     name='django-adminplus',
-    version='0.1.7',
+    version=adminplus.__version__,
     description='Add new pages to the Django admin.',
     long_description=open('README.rst').read(),
     author='James Socol',
     author_email='james@mozilla.com',
     url='http://github.com/jsocol/django-adminplus',
     license='BSD',
-    packages=['adminplus'],
+    packages=find_packages(exclude=['test_settings']),
     include_package_data=True,
     package_data = {'': ['README.rst', 'templates/adminplus/*.html']},
     zip_safe=False,
