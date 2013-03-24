@@ -34,7 +34,6 @@ class AdminPlusMixin(object):
             return fn
         return decorator
 
-
     def get_urls(self):
         """Add our custom views to the admin urlconf."""
         urls = super(AdminPlusMixin, self).get_urls()
