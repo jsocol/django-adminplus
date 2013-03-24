@@ -18,6 +18,10 @@ as complex as you like!) without mucking about with hijacking URLs, and
 providing links to them right in the admin index.
 
 
+.. image:: https://travis-ci.org/jsocol/django-adminplus.png?branch=master
+   :target: https://travis-ci.org/jsocol/django-adminplus
+
+
 Installing AdminPlus
 ====================
 
