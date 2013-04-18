@@ -2,7 +2,6 @@ from setuptools import setup, find_packages
 
 import adminplus
 
-
 setup(
     name='django-adminplus',
     version=adminplus.__version__,
