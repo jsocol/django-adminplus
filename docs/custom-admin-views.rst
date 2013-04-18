@@ -41,4 +41,13 @@ That's pretty much it! Now here's how you use it::
                                   RequestContext(request, {}))
     admin.site.register_view('mypath', myview, 'My View')
 
+Or, you can use it as a decorator::
+
+    from django.contrib import admin
+
+    @admin.site.register_view
+    def myview(request):
+        # Fancy goes here.
+        return render_to_response(...)
+
 Voila! Instant custom admin page that looks great.

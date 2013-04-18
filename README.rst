@@ -45,7 +45,7 @@ right before calling ``admin.autodiscover()``::
 
     # urls.py
     from django.contrib import admin
-    from adminplus import AdminSitePlus
+    from adminplus.sites import AdminSitePlus
 
     admin.site = AdminSitePlus()
     admin.autodiscover()
