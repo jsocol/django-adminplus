@@ -76,7 +76,7 @@ arbitrary views to the admin::
 
     def my_view(request, *args, **kwargs):
         pass
-    admin.site.register_view('somepath', my_view)
+    admin.site.register_view('somepath', view=my_view)
 
     # And of course, this still works:
     from someapp.models import MyModel
@@ -85,13 +85,19 @@ arbitrary views to the admin::
 Now ``my_view`` will be accessible at ``admin/somepath`` and there will be a
 link to it in the *Custom Views* section of the admin index.
 
+You can also use ``register_view`` as a decorator::
+
+    @admin.site.register_view('somepath')
+    def my_view(request):
+        pass
+
 ``register_view`` takes some optional arguments: 
 
 * ``name``: a friendly name for display in the list of custom views. For example::
 
     def my_view(request):
         """Does something fancy!"""
-    admin.site.register_view('somepath', my_view, 'My Fancy Admin View!')
+    admin.site.register_view('somepath', 'My Fancy Admin View!', view=my_view)
 
 * ``urlname``: give a name to the urlpattern so it can be called by 
   ``redirect()``, ``reverse()``, etc.
