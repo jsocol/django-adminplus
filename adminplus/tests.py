@@ -38,12 +38,11 @@ class AdminPlusTests(TestCase):
 
         urls = site.get_urls()
 
-        matches = lambda u: lambda p: p.resolve(u)
-        foo_urls = filter(matches('foo'), urls)
+        foo_urls = [u for u in urls if u.resolve('foo')]
         self.assertEqual(1, len(foo_urls))
-        bar_urls = filter(matches('bar/baz'), urls)
+        bar_urls = [u for u in urls if u.resolve('bar/baz')]
         self.assertEqual(1, len(bar_urls))
-        qux_urls = filter(matches('baz-qux'), urls)
+        qux_urls = [u for u in urls if u.resolve('baz-qux')]
         self.assertEqual(1, len(qux_urls))
 
     def test_urlname(self):
@@ -59,11 +58,10 @@ class AdminPlusTests(TestCase):
             return 'bar'
 
         urls = site.get_urls()
-        matches = lambda u: lambda p: p.resolve(u)
-        foo_urls = filter(matches('foo'), urls)
+        foo_urls = [u for u in urls if u.resolve('foo')]
         self.assertEqual(1, len(foo_urls))
         self.assertEqual('foo', foo_urls[0].name)
 
-        bar_urls = filter(matches('bar'), urls)
+        bar_urls = [u for u in urls if u.resolve('bar')]
         self.assertEqual(1, len(bar_urls))
         assert bar_urls[0].name is None
