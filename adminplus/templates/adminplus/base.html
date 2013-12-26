@@ -1,7 +1,8 @@
 {% extends "admin/base_site.html" %}
+{% load url from future %}
 
 {% block breadcrumbs %}
   <div class="breadcrumbs">
-    <a href="{% url admin:index %}">Home</a> &rsaquo; {{ title }}
+    <a href="{% url 'admin:index' %}">Home</a> &rsaquo; {{ title }}
   </div>
 {% endblock %}
