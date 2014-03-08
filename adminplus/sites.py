@@ -39,10 +39,10 @@ class AdminPlusMixin(object):
         urls = super(AdminPlusMixin, self).get_urls()
         from django.conf.urls import patterns, url
         for path, view, name, urlname, visible in self.custom_views:
-            urls += patterns(
+            urls = patterns(
                 '',
                 url(r'^%s$' % path, self.admin_view(view), name=urlname),
-            )
+            ) + urls
         return urls
 
     def index(self, request, extra_context=None):
