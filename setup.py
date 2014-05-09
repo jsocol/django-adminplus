@@ -11,7 +11,7 @@ setup(
     author_email='james@mozilla.com',
     url='http://github.com/jsocol/django-adminplus',
     license='BSD',
-    packages=find_packages(exclude=['test_settings']),
+    packages=find_packages(exclude=['test_settings', 'test_urlconf']),
     include_package_data=True,
     package_data = {'': ['README.rst', 'templates/adminplus/*.html']},
     zip_safe=False,

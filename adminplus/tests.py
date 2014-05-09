@@ -1,3 +1,4 @@
+from django.template.loader import render_to_string
 from django.test import TestCase
 
 from adminplus.sites import AdminSitePlus
@@ -65,3 +66,8 @@ class AdminPlusTests(TestCase):
         bar_urls = [u for u in urls if u.resolve('bar')]
         self.assertEqual(1, len(bar_urls))
         assert bar_urls[0].name is None
+
+    def test_base_template(self):
+        """Make sure extending the base template works everywhere."""
+        result = render_to_string('adminplus/test/index.html')
+        assert 'Ohai' in result

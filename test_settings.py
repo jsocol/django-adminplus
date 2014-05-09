@@ -15,3 +15,5 @@ DATABASES = {
         'NAME': 'test.db',
     },
 }
+
+ROOT_URLCONF = 'test_urlconf'

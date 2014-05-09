@@ -2,20 +2,23 @@
 Creating Custom Admin Views
 ===========================
 
-Any view can be used as a custom admin view in AdminPlus. All the normal rules
-apply: accept a request and possibly other parameters, return a response, and
-you're good.
+Any view can be used as a custom admin view in AdminPlus. All the normal
+rules apply: accept a request and possibly other parameters, return a
+response, and you're good.
 
-Making views look like the rest of the admin is pretty straight-forward, too.
+Making views look like the rest of the admin is pretty straight-forward,
+too.
 
 
 Extending the Admin Templates
 =============================
 
-AdminPlus contains an base template you can easily extend. It includes the
-breadcrumb boilerplate. You can also extend ``admin/base_site.html`` directly.
+AdminPlus contains an base template you can easily extend. It includes
+the breadcrumb boilerplate. You can also extend ``admin/base_site.html``
+directly.
 
-Your view should pass a ``title`` value to the template to make things pretty.
+Your view should pass a ``title`` value to the template to make things
+pretty.
 
 Here's an example template::
 
