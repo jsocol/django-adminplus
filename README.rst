@@ -25,8 +25,12 @@ providing links to them right in the admin index.
 Installing AdminPlus
 ====================
 
-Grab AdminPlus from `github <https://github.com/jsocol/django-adminplus>`_ with
-pip::
+Install from `PyPI <https://pypi.python.org/pypi/django-adminplus>`_ with pip::
+
+    pip install django-adminplus
+
+Or get AdminPlus from `GitHub <https://github.com/jsocol/django-adminplus>`_
+with pip::
 
     pip install -e git://github.com/jsocol/django-adminplus#egg=django-adminplus
 
@@ -105,3 +109,8 @@ You can also use ``register_view`` as a decorator::
   dashboard.
 
 All registered views are wrapped in ``admin.site.admin_view``.
+
+.. note::
+   
+   Views with URLs that match auto-discovered URLs (e.g. those created via
+   ModelAdmins) will override the auto-discovered URL.
