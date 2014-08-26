@@ -61,6 +61,16 @@ right before calling ``admin.autodiscover()``::
         # ...
     )
 
+If you're using Django 1.7, you should also replace ``django.contrib.admin`` with
+``django.contrib.admin.apps.SimpleAdminConfig`` in your installed apps, in order
+to disable the automatic auto-discovery::
+
+    INSTALLED_APPS = (
+        # ...
+        'django.contrib.admin.apps.SimpleAdminConfig',  # instead of 'django.contrib.admin'
+        # ...
+    )
+
 Congratulations! You're now using AdminPlus.
 
 
