@@ -1,5 +1,6 @@
 from django.template.loader import render_to_string
 from django.test import TestCase
+from django.views.generic import View
 
 from adminplus.sites import AdminSitePlus
 
@@ -12,9 +13,15 @@ class AdminPlusTests(TestCase):
         @site.register_view(r'foo/bar')
         def foo_bar(request):
             return 'foo-bar'
-
+        
+        @site.register_view(r'foobar')
+        class FooBar(View):
+            def get(self, request):
+                return 'foo-bar'
+        
         urls = site.get_urls()
         assert any(u.resolve('foo/bar') for u in urls)
+        assert any(u.resolve('foobar') for u in urls)
 
     def test_function(self):
         """register_view works as a function."""
@@ -23,9 +30,15 @@ class AdminPlusTests(TestCase):
         def foo(request):
             return 'foo'
         site.register_view('foo', view=foo)
+        
+        class Foo(View):
+            def get(self, request):
+                return 'foo'
+        site.register_view('bar', view=Foo)
 
         urls = site.get_urls()
         assert any(u.resolve('foo') for u in urls)
+        assert any(u.resolve('bar') for u in urls)
 
     def test_path(self):
         """Setting the path works correctly."""
