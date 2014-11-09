@@ -1,5 +1,10 @@
 from django.contrib.admin.sites import AdminSite
 from django.utils.text import capfirst
+from django.views.generic import View
+import inspect
+
+def is_class_based_view(view):
+    return inspect.isclass(view) and issubclass(view, View)
 
 
 class AdminPlusMixin(object):
@@ -26,10 +31,14 @@ class AdminPlusMixin(object):
         * `view` is any view function you can imagine.
         """
         if view is not None:
+            if is_class_based_view(view):
+                view = view.as_view()
             self.custom_views.append((path, view, name, urlname, visible))
             return
 
         def decorator(fn):
+            if is_class_based_view(fn):
+                fn = fn.as_view()
             self.custom_views.append((path, fn, name, urlname, visible))
             return fn
         return decorator
