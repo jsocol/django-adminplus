@@ -17,3 +17,4 @@ DATABASES = {
 }
 
 ROOT_URLCONF = 'test_urlconf'
+MIDDLEWARE_CLASSES = ()
