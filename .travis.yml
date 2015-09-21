@@ -1,4 +1,5 @@
 language: python
+sudo: false
 python:
  - "2.6"
  - "2.7"
@@ -7,9 +8,9 @@ python:
  - "3.4"
 env:
  - DJANGO_VERSION=1.4
- - DJANGO_VERSION=1.5
  - DJANGO_VERSION=1.6
  - DJANGO_VERSION=1.7
+ - DJANGO_VERSION=1.8
 matrix:
   exclude:
     - python: "3.2"
@@ -19,11 +20,13 @@ matrix:
     - python: "3.4"
       env: DJANGO_VERSION=1.4
     - python: "3.4"
-      env: DJANGO_VERSION=1.5
-    - python: "3.4"
       env: DJANGO_VERSION=1.6
     - python: "2.6"
       env: DJANGO_VERSION=1.7
+    - python: "2.6"
+      env: DJANGO_VERSION=1.8
 install:
- - pip install -q "Django>=${DJANGO_VERSION},<${DJANGO_VERSION}.99"
-script: ./run.sh test
+ - pip install -q "Django>=${DJANGO_VERSION},<${DJANGO_VERSION}.99" flake8
+script:
+ - ./run.sh test
+ - ./run.sh check
