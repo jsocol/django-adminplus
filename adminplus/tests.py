@@ -13,12 +13,12 @@ class AdminPlusTests(TestCase):
         @site.register_view(r'foo/bar')
         def foo_bar(request):
             return 'foo-bar'
-        
+
         @site.register_view(r'foobar')
         class FooBar(View):
             def get(self, request):
                 return 'foo-bar'
-        
+
         urls = site.get_urls()
         assert any(u.resolve('foo/bar') for u in urls)
         assert any(u.resolve('foobar') for u in urls)
@@ -30,7 +30,7 @@ class AdminPlusTests(TestCase):
         def foo(request):
             return 'foo'
         site.register_view('foo', view=foo)
-        
+
         class Foo(View):
             def get(self, request):
                 return 'foo'
