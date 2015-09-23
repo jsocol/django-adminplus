@@ -1,5 +1,5 @@
 from django.template.loader import render_to_string
-from django.test import TestCase
+from django.test import TestCase, RequestFactory
 from django.views.generic import View
 
 from adminplus.sites import AdminSitePlus
@@ -84,3 +84,51 @@ class AdminPlusTests(TestCase):
         """Make sure extending the base template works everywhere."""
         result = render_to_string('adminplus/test/index.html')
         assert 'Ohai' in result
+
+    def test_visibility(self):
+        """Make sure visibility works."""
+        site = AdminSitePlus()
+        req_factory = RequestFactory()
+
+        def always_visible(request):
+            return 'i am here'
+        site.register_view('always-visible', view=always_visible, visible=True)
+
+        def always_hidden(request):
+            return 'i am here, but not shown'
+        site.register_view('always-hidden', view=always_visible, visible=False)
+
+        cond = lambda req: req.user.pk == 1
+        b = lambda s: s.encode('ascii') if hasattr(s, 'encode') else s
+
+        @site.register_view(r'conditional-view', visible=cond)
+        class ConditionallyVisible(View):
+            def get(self, request):
+                return 'hi there'
+
+        urls = site.get_urls()
+        assert any(u.resolve('always-visible') for u in urls)
+        assert any(u.resolve('always-hidden') for u in urls)
+        assert any(u.resolve('conditional-view') for u in urls)
+
+        class MockUser(object):
+            is_active = True
+            is_staff = True
+
+            def __init__(self, pk):
+                self.pk = pk
+                self.id = pk
+
+        req_show = req_factory.get('/admin/')
+        req_show.user = MockUser(1)
+        result = site.index(req_show).render().content
+        assert b('always-visible') in result
+        assert b('always-hidden') not in result
+        assert b('conditional-view') in result
+
+        req_hide = req_factory.get('/admin/')
+        req_hide.user = MockUser(2)
+        result = site.index(req_hide).render().content
+        assert b('always-visible') in result
+        assert b('always-hidden') not in result
+        assert b('conditional-view') not in result

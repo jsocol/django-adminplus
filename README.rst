@@ -115,8 +115,8 @@ You can also use ``register_view`` as a decorator::
 
 * ``urlname``: give a name to the urlpattern so it can be called by 
   ``redirect()``, ``reverse()``, etc.
-* `visible`: a boolean that defines if the custom view is visible in the admin
-  dashboard.
+* `visible`: a boolean or a callable returning one, that defines if
+  the custom view is visible in the admin dashboard.
 
 All registered views are wrapped in ``admin.site.admin_view``.
 
