@@ -27,8 +27,8 @@ class AdminPlusMixin(object):
             empty, we'll guess based on view.__name__.
         * `urlname` is an optional parameter to be able to call the view with a
             redirect() or reverse()
-        * `visible` is a boolean to set if the custom view should be visible in
-            the admin dashboard or not.
+        * `visible` is a boolean or predicate returning one, to set if
+            the custom view should be visible in the admin dashboard or not.
         * `view` is any view function you can imagine.
         """
         if view is not None:
@@ -61,7 +61,9 @@ class AdminPlusMixin(object):
             extra_context = {}
         custom_list = []
         for path, view, name, urlname, visible in self.custom_views:
-            if visible is True:
+            if callable(visible):
+                visible = visible(request)
+            if visible:
                 if name:
                     custom_list.append((path, name))
                 else:
