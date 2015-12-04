@@ -1,0 +1,27 @@
+Changelog
+=========
+
+v0.5
+----
+
+- Drop support for unsupported Django versions.
+- Test on 1.8 and 1.9.
+- Remove deprecated patterns() call.
+
+v0.4
+----
+
+- Update supported Django versions.
+- Support registering class-based views.
+- Allow callables for `visible`.
+
+v0.3
+----
+
+- Prioritize custom views over generic patterns.
+- Fix a Django>=1.5 template bug.
+
+v0.2.1
+------
+
+- Fix Django 1.6 support.
