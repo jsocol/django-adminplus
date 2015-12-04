@@ -54,12 +54,12 @@ right before calling ``admin.autodiscover()``::
     admin.site = AdminSitePlus()
     admin.autodiscover()
 
-    urlpatterns = patterns('',
+    urlpatterns = [
         # ...
         # Include the admin URL conf as normal.
         (r'^admin', include(admin.site.urls)),
         # ...
-    )
+    ]
 
 If you're using Django 1.7, you should also replace ``django.contrib.admin`` with
 ``django.contrib.admin.apps.SimpleAdminConfig`` in your installed apps, in order
