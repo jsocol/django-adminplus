@@ -2,12 +2,19 @@ language: python
 sudo: false
 python:
  - "2.7"
+ - "3.2"
  - "3.3"
  - "3.4"
  - "3.5"
 env:
  - DJANGO_VERSION=1.8
  - DJANGO_VERSION=1.9
+matrix:
+  exclude:
+    - env: DJANGO_VERSION=1.9
+      python: "3.2"
+    - env: DJANGO_VERSION=1.9
+      python: "3.3"
 install:
  - pip install -q "Django>=${DJANGO_VERSION},<${DJANGO_VERSION}.99" flake8
 script:
