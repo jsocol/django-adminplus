@@ -34,7 +34,8 @@ class AdminPlusMixin(object):
         def decorator(fn):
             if is_class_based_view(fn):
                 fn = fn.as_view()
-            self.custom_views.append((path, fn, name, urlname, visible, kwargs))
+            self.custom_views.append(
+                (path, fn, name, urlname, visible, kwargs))
             return fn
         if view is not None:
             decorator(view)
