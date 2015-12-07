@@ -18,7 +18,7 @@ class AdminPlusMixin(object):
         return super(AdminPlusMixin, self).__init__(*args, **kwargs)
 
     def register_view(self, path, name=None, urlname=None, visible=True,
-                      view=None):
+                      view=None, **kwargs):
         """Add a custom admin view. Can be used as a function or a decorator.
 
         * `path` is the path in the admin where the view will live, e.g.
@@ -34,7 +34,7 @@ class AdminPlusMixin(object):
         def decorator(fn):
             if is_class_based_view(fn):
                 fn = fn.as_view()
-            self.custom_views.append((path, fn, name, urlname, visible))
+            self.custom_views.append((path, fn, name, urlname, visible, kwargs))
             return fn
         if view is not None:
             decorator(view)
@@ -45,7 +45,7 @@ class AdminPlusMixin(object):
         """Add our custom views to the admin urlconf."""
         urls = super(AdminPlusMixin, self).get_urls()
         from django.conf.urls import url
-        for path, view, name, urlname, visible in self.custom_views:
+        for path, view, name, urlname, visible, kwargs in self.custom_views:
             urls = [
                 url(r'^%s$' % path, self.admin_view(view), name=urlname),
             ] + urls
@@ -56,14 +56,14 @@ class AdminPlusMixin(object):
         if not extra_context:
             extra_context = {}
         custom_list = []
-        for path, view, name, urlname, visible in self.custom_views:
+        for path, view, name, urlname, visible, kwargs in self.custom_views:
             if callable(visible):
                 visible = visible(request)
             if visible:
                 if name:
-                    custom_list.append((path, name))
+                    custom_list.append((path, name, kwargs))
                 else:
-                    custom_list.append((path, capfirst(view.__name__)))
+                    custom_list.append((path, capfirst(view.__name__), kwargs))
 
         # Sort views alphabetically.
         custom_list.sort(key=lambda x: x[1])
