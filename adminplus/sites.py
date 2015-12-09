@@ -62,9 +62,10 @@ class AdminPlusMixin(object):
                 visible = visible(request)
             if visible:
                 if name:
-                    custom_list.append((path, name, kwargs))
+                    custom_list.append((path, name, urlname, kwargs))
                 else:
-                    custom_list.append((path, capfirst(view.__name__), kwargs))
+                    custom_list.append(
+                        (path, capfirst(view.__name__), urlname, kwargs))
 
         # Sort views alphabetically.
         custom_list.sort(key=lambda x: x[1])
