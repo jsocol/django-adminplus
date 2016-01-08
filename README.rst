@@ -34,9 +34,11 @@ with pip::
 
     pip install -e git://github.com/jsocol/django-adminplus#egg=django-adminplus
 
-And add ``adminplus`` to your installed apps::
+And add ``adminplus`` to your installed apps, and replace
+``django.contrib.admin`` with ``django.contrib.admin.apps.SimpleAdminConfig``::
 
     INSTALLED_APPS = (
+        'django.contrib.admin.apps.SimpleAdminConfig',
         # ...
         'adminplus',
         # ...
@@ -60,16 +62,6 @@ right before calling ``admin.autodiscover()``::
         (r'^admin', include(admin.site.urls)),
         # ...
     ]
-
-If you're using Django 1.7, you should also replace ``django.contrib.admin`` with
-``django.contrib.admin.apps.SimpleAdminConfig`` in your installed apps, in order
-to disable the automatic auto-discovery::
-
-    INSTALLED_APPS = (
-        # ...
-        'django.contrib.admin.apps.SimpleAdminConfig',  # instead of 'django.contrib.admin'
-        # ...
-    )
 
 Congratulations! You're now using AdminPlus.
 
