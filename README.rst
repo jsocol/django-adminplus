@@ -106,7 +106,9 @@ You can also use ``register_view`` as a decorator::
     admin.site.register_view('somepath', 'My Fancy Admin View!', view=my_view)
 
 * ``urlname``: give a name to the urlpattern so it can be called by 
-  ``redirect()``, ``reverse()``, etc.
+  ``redirect()``, ``reverse()``, etc. The view will be added 
+  to the ``admin`` namespace, so a urlname of ``foo`` would be reversed
+  with ``reverse("admin:foo")``.
 * `visible`: a boolean or a callable returning one, that defines if
   the custom view is visible in the admin dashboard.
 
