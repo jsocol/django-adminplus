@@ -59,7 +59,7 @@ right before calling ``admin.autodiscover()``::
     urlpatterns = [
         # ...
         # Include the admin URL conf as normal.
-        (r'^admin', include(admin.site.urls)),
+        (r'^admin', admin.site.urls),
         # ...
     ]
 
