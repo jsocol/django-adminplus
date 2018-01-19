@@ -15,7 +15,7 @@ case "$1" in
     "test" )
         django-admin.py test adminplus ;;
     "check" )
-        flake8 adminplus/ ;;
+        flake8 adminplus/ --exclude=tests*.py ;;
     "shell" )
         django-admin.py shell ;;
     * )
