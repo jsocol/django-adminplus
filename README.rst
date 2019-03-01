@@ -49,11 +49,17 @@ And add ``adminplus`` to your installed apps, and replace ``django.contrib.admin
         # ...
     )
 
-To use AdminPlus in your Django project, you'll need to replace ``django.contrib.admin.site``, which is an instance of ``django.contrib.admin.sites.AdminSite``. I recommend doing this in ``urls.py`` right before calling ``admin.autodiscover()``:
+To use AdminPlus in your Django project, you'll need to replace
+``django.contrib.admin.site``, which is an instance of
+``django.contrib.admin.sites.AdminSite``. I recommend doing this in ``urls.py``
+right before calling ``admin.autodiscover()``:
+
+For Django 1.11:
 
 .. code-block:: python
 
     # urls.py
+    from django.conf.urls import url, include
     from django.contrib import admin
     from adminplus.sites import AdminSitePlus
 
@@ -63,7 +69,25 @@ To use AdminPlus in your Django project, you'll need to replace ``django.contrib
     urlpatterns = [
         # ...
         # Include the admin URL conf as normal.
-        (r'^admin', include(admin.site.urls)),
+        url(r'^admin', include(admin.site.urls)),
+        # ...
+    ]
+
+For Django 2.x:
+
+.. code-block:: python
+    # urls.py
+    from django.contrib import admin
+    from django.urls import path
+    from adminplus.sites import AdminSitePlus
+
+    admin.site = AdminSitePlus()
+    admin.autodiscover()
+
+    urlpatterns = [
+        # ...
+        # Include the admin URL conf as normal.
+        path('admin/', admin.site.urls),
         # ...
     ]
 
@@ -77,7 +101,8 @@ So now that you've installed AdminPlus, you'll want to use it. AdminPlus is
 100% compatible with the built in admin module, so if you've been using that,
 you shouldn't have to change anything.
 
-AdminPlus offers a new function, ``admin.site.register_view``, to attach arbitrary views to the admin:
+AdminPlus offers a new function, ``admin.site.register_view``, to attach
+arbitrary views to the admin:
 
 .. code-block:: python
 
@@ -106,18 +131,21 @@ You can also use ``register_view`` as a decorator:
 
 ``register_view`` takes some optional arguments: 
 
-* ``name``: a friendly name for display in the list of custom views. For example:
+.. py:decorator:: register_view(path, name=None, urlname=None, visible=True)
 
-  .. code-block:: python
+    :param str name: a human friendly name for display in the list of custom
+        views. For example:
 
-    def my_view(request):
-        """Does something fancy!"""
-    admin.site.register_view('somepath', 'My Fancy Admin View!', view=my_view)
+    .. code-block:: python
 
-* ``urlname``: give a name to the urlpattern so it can be called by 
-  ``redirect()``, ``reverse()``, etc.
-* `visible`: a boolean or a callable returning one, that defines if
-  the custom view is visible in the admin dashboard.
+        def my_view(request):
+            """Does something fancy!"""
+        admin.site.register_view('somepath', 'My Fancy Admin View!', view=my_view)
+
+    :param str urlname: give a name to the urlpattern so it can be called by 
+        ``redirect()``, ``reverse()``, etc.
+    :param bool visible: a boolean or a callable returning one, that defines if
+        the custom view is visible in the admin dashboard.
 
 All registered views are wrapped in ``admin.site.admin_view``.
 

@@ -41,5 +41,8 @@ DATABASES = {
     },
 }
 
-ROOT_URLCONF = 'test_urlconf'
+if django.VERSION < (2, 0):
+    ROOT_URLCONF = 'test_urlconf'
+else:
+    ROOT_URLCONF = 'test_urlconf2'
 MIDDLEWARE_CLASSES = ()

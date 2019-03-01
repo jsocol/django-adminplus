@@ -99,7 +99,6 @@ class AdminPlusTests(TestCase):
         site.register_view('always-hidden', view=always_visible, visible=False)
 
         cond = lambda req: req.user.pk == 1
-        b = lambda s: s.encode('ascii') if hasattr(s, 'encode') else s
 
         @site.register_view(r'conditional-view', visible=cond)
         class ConditionallyVisible(View):
@@ -122,13 +121,13 @@ class AdminPlusTests(TestCase):
         req_show = req_factory.get('/admin/')
         req_show.user = MockUser(1)
         result = site.index(req_show).render().content
-        assert b('always-visible') in result
-        assert b('always-hidden') not in result
-        assert b('conditional-view') in result
+        assert b'always-visible' in result
+        assert b'always-hidden' not in result
+        assert b'conditional-view' in result
 
         req_hide = req_factory.get('/admin/')
         req_hide.user = MockUser(2)
         result = site.index(req_hide).render().content
-        assert b('always-visible') in result
-        assert b('always-hidden') not in result
-        assert b('conditional-view') not in result
+        assert b'always-visible' in result
+        assert b'always-hidden' not in result
+        assert b'conditional-view' not in result
