@@ -25,17 +25,22 @@ providing links to them right in the admin index.
 Installing AdminPlus
 ====================
 
-Install from `PyPI <https://pypi.python.org/pypi/django-adminplus>`_ with pip::
+Install from `PyPI <https://pypi.python.org/pypi/django-adminplus>`_ with pip:
+
+.. code-block:: bash
 
     pip install django-adminplus
 
 Or get AdminPlus from `GitHub <https://github.com/jsocol/django-adminplus>`_
-with pip::
+with pip:
+
+.. code-block:: bash
 
     pip install -e git://github.com/jsocol/django-adminplus#egg=django-adminplus
 
-And add ``adminplus`` to your installed apps, and replace
-``django.contrib.admin`` with ``django.contrib.admin.apps.SimpleAdminConfig``::
+And add ``adminplus`` to your installed apps, and replace ``django.contrib.admin`` with ``django.contrib.admin.apps.SimpleAdminConfig``:
+
+.. code-block:: python
 
     INSTALLED_APPS = (
         'django.contrib.admin.apps.SimpleAdminConfig',
@@ -44,10 +49,9 @@ And add ``adminplus`` to your installed apps, and replace
         # ...
     )
 
-To use AdminPlus in your Django project, you'll need to replace
-``django.contrib.admin.site``, which is an instance of
-``django.contrib.admin.sites.AdminSite``. I recommend doing this in ``urls.py``
-right before calling ``admin.autodiscover()``::
+To use AdminPlus in your Django project, you'll need to replace ``django.contrib.admin.site``, which is an instance of ``django.contrib.admin.sites.AdminSite``. I recommend doing this in ``urls.py`` right before calling ``admin.autodiscover()``:
+
+.. code-block:: python
 
     # urls.py
     from django.contrib import admin
@@ -73,8 +77,9 @@ So now that you've installed AdminPlus, you'll want to use it. AdminPlus is
 100% compatible with the built in admin module, so if you've been using that,
 you shouldn't have to change anything.
 
-AdminPlus offers a new function, ``admin.site.register_view``, to attach
-arbitrary views to the admin::
+AdminPlus offers a new function, ``admin.site.register_view``, to attach arbitrary views to the admin:
+
+.. code-block:: python
 
     # someapp/admin.py
     # Assuming you've replaced django.contrib.admin.site as above.
@@ -91,7 +96,9 @@ arbitrary views to the admin::
 Now ``my_view`` will be accessible at ``admin/somepath`` and there will be a
 link to it in the *Custom Views* section of the admin index.
 
-You can also use ``register_view`` as a decorator::
+You can also use ``register_view`` as a decorator:
+
+.. code-block:: python
 
     @admin.site.register_view('somepath')
     def my_view(request):
@@ -99,7 +106,9 @@ You can also use ``register_view`` as a decorator::
 
 ``register_view`` takes some optional arguments: 
 
-* ``name``: a friendly name for display in the list of custom views. For example::
+* ``name``: a friendly name for display in the list of custom views. For example:
+
+  .. code-block:: python
 
     def my_view(request):
         """Does something fancy!"""
