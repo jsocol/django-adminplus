@@ -18,6 +18,9 @@ case "$1" in
         flake8 adminplus/ --exclude=tests*.py ;;
     "shell" )
         django-admin.py shell ;;
+    "dj" )
+        shift
+        django-admin.py "$@" ;;
     * )
         usage ;;
 esac

@@ -14,8 +14,8 @@ class AdminPlusMixin(object):
     index_template = 'adminplus/index.html'  # That was easy.
 
     def __init__(self, *args, **kwargs):
+        super(AdminPlusMixin, self).__init__(*args, **kwargs)
         self.custom_views = []
-        return super(AdminPlusMixin, self).__init__(*args, **kwargs)
 
     def register_view(self, path, name=None, urlname=None, visible=True,
                       view=None):
@@ -46,9 +46,9 @@ class AdminPlusMixin(object):
         urls = super(AdminPlusMixin, self).get_urls()
         from django.conf.urls import url
         for path, view, name, urlname, visible in self.custom_views:
-            urls = [
+            urls += [
                 url(r'^%s$' % path, self.admin_view(view), name=urlname),
-            ] + urls
+            ]
         return urls
 
     def index(self, request, extra_context=None):
