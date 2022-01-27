@@ -1,4 +1,7 @@
-from django.conf.urls import url, include
+try:  # Django 2+
+    from django.urls import re_path as url, include
+except ImportError:
+    from django.conf.urls import url, include
 from django.contrib import admin
 
 from adminplus.sites import AdminSitePlus
