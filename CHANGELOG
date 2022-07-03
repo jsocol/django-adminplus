@@ -1,6 +1,12 @@
 Changelog
 =========
 
+v0.7
+----
+
+- Override `get_app_list()` instead of overriding index template, so custom views are visible in sidebar too.
+- Add `AdminSitePlus.custom_views_title` to make module title overridable (#51).
+
 v0.6
 ----
 
