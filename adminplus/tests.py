@@ -52,12 +52,13 @@ class AdminPlusTests(TestCase):
 
         urls = site.get_urls()
 
+        # the default admin contains a catchall view, so each will match 2
         foo_urls = [u for u in urls if u.resolve('foo')]
-        self.assertEqual(1, len(foo_urls))
+        self.assertEqual(2, len(foo_urls))
         bar_urls = [u for u in urls if u.resolve('bar/baz')]
-        self.assertEqual(1, len(bar_urls))
+        self.assertEqual(2, len(bar_urls))
         qux_urls = [u for u in urls if u.resolve('baz-qux')]
-        self.assertEqual(1, len(qux_urls))
+        self.assertEqual(2, len(qux_urls))
 
     def test_urlname(self):
         """Set URL pattern names correctly."""
@@ -73,11 +74,13 @@ class AdminPlusTests(TestCase):
 
         urls = site.get_urls()
         foo_urls = [u for u in urls if u.resolve('foo')]
-        self.assertEqual(1, len(foo_urls))
+
+        # the default admin contains a catchall view, so this will capture two
+        self.assertEqual(2, len(foo_urls))
         self.assertEqual('foo', foo_urls[0].name)
 
         bar_urls = [u for u in urls if u.resolve('bar')]
-        self.assertEqual(1, len(bar_urls))
+        self.assertEqual(2, len(bar_urls))
         assert bar_urls[0].name is None
 
     def test_base_template(self):

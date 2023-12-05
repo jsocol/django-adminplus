@@ -1,7 +1,17 @@
+from collections import namedtuple
+import inspect
+from typing import Any, Callable, NewType, Sequence, Union
+
 from django.contrib.admin.sites import AdminSite
+from django.urls import URLPattern, URLResolver, path
 from django.utils.text import capfirst
 from django.views.generic import View
-import inspect
+
+
+_FuncT = NewType('_FuncT', Callable[..., Any])
+
+AdminView = namedtuple('AdminView',
+                       ['path', 'view', 'name', 'urlname', 'visible'])
 
 
 def is_class_based_view(view):
@@ -14,11 +24,11 @@ class AdminPlusMixin(object):
     index_template = 'adminplus/index.html'  # That was easy.
 
     def __init__(self, *args, **kwargs):
-        self.custom_views = []
-        return super(AdminPlusMixin, self).__init__(*args, **kwargs)
+        self.custom_views: list[AdminView] = []
+        return super().__init__(*args, **kwargs)
 
-    def register_view(self, path, name=None, urlname=None, visible=True,
-                      view=None):
+    def register_view(self, slug, name=None, urlname=None, visible=True,
+                      view=None) -> Union[None, Callable[[_FuncT], _FuncT]]:
         """Add a custom admin view. Can be used as a function or a decorator.
 
         * `path` is the path in the admin where the view will live, e.g.
@@ -31,24 +41,23 @@ class AdminPlusMixin(object):
             the custom view should be visible in the admin dashboard or not.
         * `view` is any view function you can imagine.
         """
-        def decorator(fn):
+        def decorator(fn: _FuncT):
             if is_class_based_view(fn):
                 fn = fn.as_view()
-            self.custom_views.append((path, fn, name, urlname, visible))
+            self.custom_views.append(
+                    AdminView(slug, fn, name, urlname, visible))
             return fn
         if view is not None:
             decorator(view)
             return
         return decorator
 
-    def get_urls(self):
+    def get_urls(self) -> Sequence[Union[URLPattern, URLResolver]]:
         """Add our custom views to the admin urlconf."""
-        urls = super(AdminPlusMixin, self).get_urls()
-        from django.conf.urls import url
-        for path, view, name, urlname, visible in self.custom_views:
-            urls = [
-                url(r'^%s$' % path, self.admin_view(view), name=urlname),
-            ] + urls
+        urls: list[Union[URLPattern, URLResolver]] = super().get_urls()
+        for av in self.custom_views:
+            urls.insert(
+                0, path(av.path, self.admin_view(av.view), name=av.urlname))
         return urls
 
     def index(self, request, extra_context=None):
@@ -56,21 +65,21 @@ class AdminPlusMixin(object):
         if not extra_context:
             extra_context = {}
         custom_list = []
-        for path, view, name, urlname, visible in self.custom_views:
+        for slug, view, name, _, visible in self.custom_views:
             if callable(visible):
                 visible = visible(request)
             if visible:
                 if name:
-                    custom_list.append((path, name))
+                    custom_list.append((slug, name))
                 else:
-                    custom_list.append((path, capfirst(view.__name__)))
+                    custom_list.append((slug, capfirst(view.__name__)))
 
         # Sort views alphabetically.
         custom_list.sort(key=lambda x: x[1])
         extra_context.update({
             'custom_list': custom_list
         })
-        return super(AdminPlusMixin, self).index(request, extra_context)
+        return super().index(request, extra_context)
 
 
 class AdminSitePlus(AdminPlusMixin, AdminSite):
