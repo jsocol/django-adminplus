@@ -18,8 +18,8 @@ as complex as you like!) without mucking about with hijacking URLs, and
 providing links to them right in the admin index.
 
 
-.. image:: https://travis-ci.org/jsocol/django-adminplus.svg?branch=master
-   :target: https://travis-ci.org/jsocol/django-adminplus
+.. image:: https://github.com/jsocol/django-adminplus/actions/workflows/ci.yml/badge.svg?branch=main
+   :target: https://github.com/jsocol/django-adminplus
 
 
 Installing AdminPlus
