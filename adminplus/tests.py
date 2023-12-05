@@ -101,8 +101,8 @@ class AdminPlusTests(TestCase):
             return 'i am here, but not shown'
         site.register_view('always-hidden', view=always_visible, visible=False)
 
-        cond = lambda req: req.user.pk == 1
-        b = lambda s: s.encode('ascii') if hasattr(s, 'encode') else s
+        cond = lambda req: req.user.pk == 1  # noqa: E731
+        b = lambda s: s.encode('ascii') if hasattr(s, 'encode') else s  # noqa: #731
 
         @site.register_view(r'conditional-view', visible=cond)
         class ConditionallyVisible(View):

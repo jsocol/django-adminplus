@@ -57,4 +57,4 @@ jobs:
 
     - name: Lint with flake8
       run: |
-        ./run.sh check
+        ./run.sh lint
