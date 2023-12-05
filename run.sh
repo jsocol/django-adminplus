@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 export PYTHONPATH=".:$PYTHONPATH"
 export DJANGO_SETTINGS_MODULE="test_settings"
@@ -13,11 +13,11 @@ usage() {
 
 case "$1" in
     "test" )
-        django-admin.py test adminplus ;;
+        django-admin test adminplus ;;
     "check" )
         flake8 adminplus/ --exclude=tests*.py ;;
     "shell" )
-        django-admin.py shell ;;
+        django-admin shell ;;
     * )
         usage ;;
 esac

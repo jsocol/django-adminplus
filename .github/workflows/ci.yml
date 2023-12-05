@@ -1,0 +1,56 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  schedule:
+    - cron: '17 7 * * 0' # run weekly on sundays
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.8', '3.9', '3.10', '3.11']
+        django: ['3.2', '4.1', '4.2', '5.0', 'main']
+        exclude:
+          - python-version: '3.7'
+            django: 'main'
+          - python-version: '3.11'
+            django: '3.2'
+          - python-version: '3.8'
+            django: '5.0'
+          - python-version: '3.9'
+            django: '5.0'
+        include:
+          - python-version: '3.12'
+            django: '5.0'
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: ./.github/actions/test
+      with:
+        python-version: ${{ matrix.python-version }}
+        django-version: ${{ matrix.django }}
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: install flake8
+      run: pip install flake8
+
+    - name: Lint with flake8
+      run: |
+        ./run.sh check
