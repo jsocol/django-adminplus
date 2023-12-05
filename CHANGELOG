@@ -1,6 +1,14 @@
 Changelog
 =========
 
+v0.6
+----
+
+- Update supported Django and Python versions.
+- Fix multiple bugs in urlconfs.
+- Update test and build tooling to use GitHub Actions as a Trusted Publisher
+  for PyPI
+
 v0.5
 ----
 
