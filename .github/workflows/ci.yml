@@ -26,6 +26,10 @@ jobs:
             django: '5.0'
           - python-version: '3.9'
             django: '5.0'
+          - python-version: '3.8'
+            django: 'main'
+          - python-version: '3.9'
+            django: 'main'
         include:
           - python-version: '3.12'
             django: '5.0'
