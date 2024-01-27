@@ -75,7 +75,13 @@ class AdminPlusMixin(object):
         return urls
 
     def get_app_list(self, request, app_label=None):
-        app_list = super().get_app_list(request, app_label=app_label)
+        # Django 3.2 don't have app_label parameter
+        kwargs = {}
+        sig = inspect.signature(super(AdminPlusMixin, self).get_app_list)
+        for p in sig.parameters.values():
+            if p.name == "app_label":
+                kwargs["app_label"] = app_label
+        app_list = super().get_app_list(request, **kwargs)
         if app_label is None or app_label == "adminplus":
             root_url = reverse("admin:index")
             custom_list = []
